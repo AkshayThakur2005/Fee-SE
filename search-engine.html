@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Engine</title>
+    <style>
+        body {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            background: linear-gradient(to right, #23f3d7, #6200ff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+.container:hover{transform: scale(1.05);
+border: solid black 3px;}
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.647);
+            padding: 50px;
+            border-radius: 15px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            width: 550px;
+            text-align: center;
+            animation: fadeIn 1s ease-in-out;
+            justify-items: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #1a05da;
+            margin-bottom: 20px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+            font-family: a;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-top: 20px;
+            font-weight: normal;
+        }
+
+        #search-input {
+            width: 94%;
+            padding: 15px;
+            border: 2px solid #ccc;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        #search-input:focus {
+            border-color: #da6405;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+        }
+.button1{ padding: 15px;
+            width: 100%;
+            cursor: pointer;
+            background-color: #40b121;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            transition: background-color 0.3s;}
+        button {
+            padding: 15px;
+            width: 100%;
+            cursor: pointer;
+            background-color: #05acda;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            transition: background-color 0.3s;
+        }
+   
+
+        button:hover {
+            background-color: #090cb3;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-height: 150px;
+            overflow-y:hidden ;
+            
+        }
+
+        li {
+            background-color: #f9f9f9f4;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        li:hover {
+            transform: translateX(10px);
+        }
+
+        
+
+       
+    </style>
+</head>
+<body>
+    <div class="bg"></div>
+    <div class="container">
+        <h1>FindIt</h1>
+        <input type="text" id="search-input" placeholder="Enter your search query here...">
+        <button id="search-btn">Search</button>
+        <button id="clear-btn" class="button1">Clear History</button>
+
+        <h2>Search History:</h2>
+        <ul id="search-history"></ul>
+    </div>
+
+   
+ 
+    <script>
+        
+        // DOM Elements
+        const searchInput = document.getElementById('search-input');
+        const searchBtn = document.getElementById('search-btn');
+        const clearBtn = document.getElementById('clear-btn');
+        const searchHistoryUl = document.getElementById('search-history');
+        
+        // Load search history from local storage
+        document.addEventListener('DOMContentLoaded', loadSearchHistory);
+        
+        // Add event listeners
+        searchBtn.addEventListener('click', performSearch);
+        clearBtn.addEventListener('click', clearHistory);
+        
+        let searchHistory = [];
+        
+        // Load search history from local storage
+        function loadSearchHistory() {
+            if (localStorage.getItem('searchHistory')) {
+                searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+                renderSearchHistory();
+            }
+        }
+        
+        // Perform search and store query
+        function performSearch() {
+            const query = searchInput.value.trim();
+            
+            if (query !== '') {
+                searchHistory.push(query);
+                localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+                renderSearchHistory();
+            }
+            
+            searchInput.value = ''; // Clear the input after search
+        }
+        
+        // Render search history in the UI
+        function renderSearchHistory() {
+            searchHistoryUl.innerHTML = '';
+            searchHistory.forEach(query => {
+                const li = document.createElement('li');
+                li.textContent = query;
+                searchHistoryUl.appendChild(li);
+            });
+        }
+        
+        // Clear search history
+        function clearHistory() {
+            localStorage.removeItem('searchHistory');
+            searchHistory = [];
+            renderSearchHistory();
+        }
+        
+        
+        
+            </script>
+</body>
+</html>
+
